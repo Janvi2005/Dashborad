@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Start CSS Links -->
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="../Common/Css/animation.min.css">
+    <link rel="stylesheet" href="../Common/Css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous">
+    <!-- End CSS Links -->
+
+    <!-- Start JS -->
+    <script src="../Common/Js/bootstrap.bundle.min.js"></script>
+    <script src="../Common/Js/sweetalert.min.js"></script>
+    <!-- End JS -->
+    <title>Responsive Dashboard</title>
+<style>
+  /* Sidebar Styling */
+        .sidebar {
+            height: 100vh;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .sidebar .profile-pic {
+            width: 100px;
+            height: 100px;
+            background-image: url('../path-to-profile-picture.jpg'); /* Replace with actual path */
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .list-group-item {
+            width: 100%;
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar .list-group-item:hover {
+            background-color: #e9ecef;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            .sidebar {
+                height: auto;
+                flex-direction: row;
+                overflow-x: auto;
+                justify-content: space-around;
+                padding: 10px;
+            }
+
+            .sidebar .list-group-item {
+                flex: 1;
+                text-align: center;
+                margin: 0;
+            }
+
+            .sidebar .profile-pic {
+                display: none; /* Hide profile pic on smaller screens */
+            }
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+</style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-2 col-sm-3 d-none d-sm-block bg-light sidebar">
+                <div class="profile-pic text-center mt-3"></div>
+                <ul class="list-group mt-4">
+                    <li class="list-group-item"><i class="fa fa-home"></i> Home</li>
+                    <li class="list-group-item"><i class="fa fa-user"></i> Profile</li>
+                    <li class="list-group-item"><i class="fa fa-cogs"></i> Settings</li>
+                    <li class="list-group-item"><i class="fa fa-sign-out-alt"></i> Logout</li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-10 col-sm-9">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h1 id="welcome-message">Welcome</h1>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <!-- Stats Cards -->
+                    <div class="col-md-4 col-sm-6 mb-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h4>Teachers</h4>
+                                <h5>200</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 mb-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h4>Students</h4>
+                                <h5>2000</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 mb-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h4>Subjects</h4>
+                                <h5>5</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Forms Section -->
+                <div class="row mt-4">
+                    <!-- Create Subject -->
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="accordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#create-subject">
+                                        Create Subject
+                                    </button>
+                                </h2>
+                                <div id="create-subject" class="accordion-collapse collapse">
+                                    <div class="accordion-body">
+                                        <form id="subject-form">
+                                            <input type="text" placeholder="Enter Subject Name" class="form-control mb-3" id="subject-input">
+                                            <button type="button" class="btn btn-primary w-100" id="store-subject-btn">Store Subject</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Create Question -->
+                    <div class="col-lg-8 col-md-6">
+                        <div class="accordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#create-question">
+                                        Create Question
+                                    </button>
+                                </h2>
+                                <div id="create-question" class="accordion-collapse collapse">
+                                    <div class="accordion-body">
+                                        <form>
+                                            <select id="choose-subject" class="form-select mb-3">
+                                                <option value="choose subject">Choose Subject</option>
+                                            </select>
+                                            <input type="text" class="form-control mb-3" placeholder="Enter Question" id="question">
+                                            <!-- Options -->
+                                            <input type="text" class="form-control mb-2" placeholder="Option 1" id="question-one">
+                                            <input type="text" class="form-control mb-2" placeholder="Option 2" id="question-two">
+                                            <input type="text" class="form-control mb-2" placeholder="Option 3" id="question-three">
+                                            <input type="text" class="form-control mb-2" placeholder="Option 4" id="question-four">
+                                            <input type="text" class="form-control mb-2" placeholder="Correct Answer" id="correct-answer">
+                                            <button class="btn btn-primary w-100">Store Question</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Display Section -->
+                <div class="row mt-4">
+                    <!-- Show Subjects -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="accordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#show-subject">
+                                        Show Subjects
+                                    </button>
+                                </h2>
+                                <div id="show-subject" class="accordion-collapse collapse">
+                                    <div class="accordion-body">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                          
+                                            <div>
+                                                <i class="fa fa-edit mx-2"></i>
+                                                <i class="fa fa-trash mx-2"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <!-- Show Questions -->
+               
+                  <div class="col-lg-8 col-md-6">
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#show-question">
+                                    Show Questions
+                                </button>
+                            </h2>
+                            <div id="show-question" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <select id="choose-show-subject">
+                                        <option value="">Choose Subject</option>
+                                    </select>
+                                    <button id="load-questions-btn">Load Questions</button>
+                                    <div id="question-list"></div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <main class="col-md-10 col-sm-9">
+                    <!-- Registration Form Section -->
+                    <div class="row mt-4">
+                        <div class="col-lg-12 col-md-12 mb-4">
+                            <div class="accordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#registration-form">
+                                            Student & Teacher Registration Form
+                                        </button>
+                                    </h2>
+                                    <div id="registration-form" class="accordion-collapse collapse">
+                                        <div class="accordion-body">
+                                            <form id="registration-form-fields">
+                                                <div class="mb-3">
+                                                    <label for="name" class="form-label">Name</label>
+                                                    <input type="text" class="form-control" id="name" placeholder="Enter Name" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="father-name" class="form-label">Father's Name</label>
+                                                    <input type="text" class="form-control" id="father-name" placeholder="Enter Father's Name" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="dob" class="form-label">Date of Birth</label>
+                                                    <input type="date" class="form-control" id="dob" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="choose-type" class="form-label">Choose Type</label>
+                                                    <select class="form-select" id="choose-type" required>
+                                                        <option value="">Select Type</option>
+                                                        <option value="Teacher">Teacher</option>
+                                                        <option value="Student">Student</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="mobile" class="form-label">Mobile</label>
+                                                    <input type="tel" class="form-control" id="mobile" placeholder="Enter Mobile Number" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="enrollment" class="form-label">Enrollment</label>
+                                                    <input type="text" class="form-control" id="enrollment" placeholder="Enter Enrollment Number" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="password" class="form-label">Password</label>
+                                                    <input type="password" class="form-control" id="password" placeholder="Enter Password" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="address" class="form-label">Address</label>
+                                                    <textarea class="form-control" id="address" rows="3" placeholder="Enter Address" required></textarea>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary w-100">Submit</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+
+
+                <h2>Data List</h2>
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Father's Name</th>
+                            <th>Date of Birth</th>
+                            <th>Type</th>
+                            <th>Mobile</th>
+                            <th>Enrollment</th>
+                            <th>Address</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                
+            </div>
+        </div>
+
+    
+
+    <script src="../Dashboard/js/dashboard.js"></script>
+
+    <script src="../Dashboard/3.js"></script>
+    <script src="../Dashboard/Teacher&student.js"></script>
+  
+   
+</body>
+</html>
